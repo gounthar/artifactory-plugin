@@ -22,7 +22,7 @@
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
         <version>4.74</version>
-        <relativePath />
+        <relativePath/>
     </parent>
 
     <artifactId>artifactory</artifactId>
@@ -34,16 +34,26 @@
 
     <properties>
         <!-- Minimal version required by Pipeline dependencies in 2.14.0 -->
-        <jenkins.version>2.361.4</jenkins.version>
+        <jenkins.version>2.387.3</jenkins.version>
         <!-- TODO: enforcer is full of upper bound dependency issues, including real ones -->
         <findbugs.failOnError>true</findbugs.failOnError>
         <!--Skip integration tests unless explicitly requested with -DskipITs=false-->
         <skipITs>true</skipITs>
-        <buildinfo.version>2.41.4</buildinfo.version>
+        <buildinfo.version>2.41.7</buildinfo.version>
         <buildinfo.gradle.version>4.33.4</buildinfo.gradle.version>
     </properties>
 
     <repositories>
+        <repository>
+            <id>central</id>
+            <name>central</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        <repository>
+            <id>jenkins</id>
+            <name>jenkins-releases</name>
+            <url>https://repo.jenkins-ci.org/releases</url>
+        </repository>
         <repository>
             <id>jenkins-public</id>
             <name>jenkins-public</name>
@@ -60,11 +70,6 @@
             <id>snapshots</id>
             <name>libs-snapshot</name>
             <url>https://releases.jfrog.io/artifactory/oss-snapshots</url>
-        </repository>
-        <repository>
-            <id>central</id>
-            <name>central</name>
-            <url>https://repo.maven.apache.org/maven2</url>
         </repository>
     </repositories>
 
@@ -108,8 +113,8 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.361.x</artifactId>
-                <version>2102.v854b_fec19c92</version>
+                <artifactId>bom-2.387.x</artifactId>
+                <version>2329.v078520e55c19</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -118,9 +123,21 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
+        </dependency><!-- https://mvnrepository.com/artifact/org.apache.maven/maven-core -->
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>3.8.6</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.jenkins-ci.main</groupId>
             <artifactId>maven-plugin</artifactId>
-            <version>3.4</version>
+            <version>3.23</version>
             <exclusions>
                 <exclusion>
                     <artifactId>httpcore</artifactId>
@@ -135,17 +152,73 @@
                     <artifactId>commons-lang3</artifactId>
                     <groupId>org.apache.commons</groupId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven</groupId>
+                    <artifactId>maven-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven</groupId>
+                    <artifactId>maven-plugin-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven</groupId>
+                    <artifactId>maven-model-builder</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven</groupId>
+                    <artifactId>maven-settings</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.annotation</groupId>
+                    <artifactId>javax.annotation-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven</groupId>
+                    <artifactId>maven-builder-support</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven</groupId>
+                    <artifactId>maven-repository-metadata</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jenkins-ci.plugins</groupId>
+                    <artifactId>ssh-credentials</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jenkins-ci.plugins</groupId>
+                    <artifactId>apache-httpcomponents-client-4-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven</groupId>
+                    <artifactId>maven-artifact</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven</groupId>
+                    <artifactId>maven-resolver-provider</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven</groupId>
+                    <artifactId>maven-settings-builder</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven.resolver</groupId>
+                    <artifactId>maven-resolver-util</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>junit</artifactId>
-            <version>1.29</version>
+            <version>1217.v4297208a_a_b_ce</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>ssh-credentials</artifactId>
-            <version>1.18.1</version>
+            <version>308.ve4497b_ccd8f4</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
@@ -171,6 +244,12 @@
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>config-file-provider</artifactId>
             <version>3.7.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jenkins-ci.plugins</groupId>
+                    <artifactId>ssh-credentials</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
@@ -187,12 +266,19 @@
         <dependency>
             <groupId>org.tmatesoft.svnkit</groupId>
             <artifactId>svnkit</artifactId>
-            <version>1.10.4</version>
+            <version>1.10.11</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>structs</artifactId>
-            <version>1.22</version>
+            <version>325.vcb_307d2a_2782</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jenkins-ci.plugins</groupId>
+                    <artifactId>structs</artifactId>
+                </exclusion>
+
+            </exclusions>
         </dependency>
         <dependency>
             <!-- The git plugin is set as optional due to HAP-771 -->
@@ -221,7 +307,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>mailer</artifactId>
-            <version>1.34.2</version>
+            <version>463.vedf8358e006b_</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
@@ -232,7 +318,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>ivy</artifactId>
-            <version>1.28</version>
+            <version>2.5</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -259,7 +345,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>credentials</artifactId>
-            <version>2.3.19</version>
+            <version>1293.vff276f713473</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
@@ -269,7 +355,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>nodejs</artifactId>
-            <version>1.2.7</version>
+            <version>1.6.1</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -280,6 +366,18 @@
                 <exclusion>
                     <groupId>com.thoughtworks.xstream</groupId>
                     <artifactId>xstream</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -292,6 +390,18 @@
                     <groupId>com.thoughtworks.xstream</groupId>
                     <artifactId>xstream</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -302,6 +412,18 @@
                 <exclusion>
                     <groupId>com.thoughtworks.xstream</groupId>
                     <artifactId>xstream</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -314,12 +436,34 @@
                     <groupId>com.thoughtworks.xstream</groupId>
                     <artifactId>xstream</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jfrog.filespecs</groupId>
             <artifactId>file-specs-java</artifactId>
             <version>1.1.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <!--
@@ -346,6 +490,22 @@
                     <artifactId>groovy-all</artifactId>
                     <groupId>org.codehaus.groovy</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>org.apache.ivy</artifactId>
+                    <groupId>ivy</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -365,6 +525,30 @@
                 <exclusion>
                     <groupId>org.codehaus.plexus</groupId>
                     <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven</groupId>
+                    <artifactId>maven-builder-support</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven</groupId>
+                    <artifactId>maven-repository-metadata</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy-all</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -401,32 +585,138 @@
                     <groupId>com.tonicsystems.jarjar</groupId>
                     <artifactId>jarjar-plugin</artifactId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>org.apache.ivy</artifactId>
+                    <groupId>ivy</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-compress</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jfrog.buildinfo</groupId>
             <artifactId>build-info-extractor-npm</artifactId>
             <version>${buildinfo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jfrog.buildinfo</groupId>
             <artifactId>build-info-extractor-go</artifactId>
             <version>${buildinfo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jfrog.buildinfo</groupId>
             <artifactId>build-info-extractor-pip</artifactId>
             <version>${buildinfo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jfrog.buildinfo</groupId>
             <artifactId>build-info-extractor-docker</artifactId>
             <version>${buildinfo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-compress</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jfrog.buildinfo</groupId>
             <artifactId>build-info-extractor-nuget</artifactId>
             <version>${buildinfo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.dataformat</groupId>
+                    <artifactId>jackson-dataformat-xml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.woodstox</groupId>
+                    <artifactId>woodstox-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -436,13 +726,13 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.8.0</version>
+            <version>2.11.0</version>
         </dependency>
         <dependency>
             <!-- commons-compress is in use in the Go extractor -->
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
-            <version>1.21</version>
+            <version>1.24.0</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -459,17 +749,17 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>18.0</version>
+            <version>32.1.3-jre</version>
         </dependency>
         <dependency>
             <groupId>org.apache.ivy</groupId>
             <artifactId>ivy</artifactId>
-            <version>2.5.1</version>
+            <version>2.5.2</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>jira</artifactId>
-            <version>3.0.14</version>
+            <version>3.11</version>
             <optional>true</optional>
             <exclusions>
                 <exclusion>
@@ -481,7 +771,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>jenkins-multijob-plugin</artifactId>
-            <version>1.13</version>
+            <version>623.v03401733c9a_9</version>
             <exclusions>
                 <exclusion>
                     <artifactId>maven-plugin</artifactId>
@@ -508,7 +798,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-multibranch</artifactId>
-            <version>2.23.1</version>
+            <version>756.v891d88f2cd46</version>
             <optional>true</optional>
             <exclusions>
                 <exclusion>
@@ -520,7 +810,7 @@
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-classworlds</artifactId>
-            <version>2.5.2</version>
+            <version>2.6.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -538,7 +828,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.8.2</version>
+            <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -550,7 +840,7 @@
         <dependency>
             <groupId>org.jfrog.artifactory.client</groupId>
             <artifactId>artifactory-java-client-services</artifactId>
-            <version>2.11.1</version>
+            <version>2.16.0</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>
@@ -570,7 +860,7 @@
                     <artifactId>netty-handler</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId> javax.servlet</groupId>
+                    <groupId>javax.servlet</groupId>
                     <artifactId>javax.servlet-api</artifactId>
                 </exclusion>
             </exclusions>
@@ -578,7 +868,7 @@
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs</artifactId>
-            <version>4.5.3</version>
+            <version>4.8.0</version>
             <scope>test</scope>
         </dependency>
         <!--/Tests-->
@@ -642,29 +932,6 @@
                         <goals>
                             <goal>verify</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <bannedDependencies>
-                                    <excludes>
-                                        <!-- HAP-211 -->
-                                        <exclude>com.thoughtworks.xstream:xstream</exclude>
-                                        <exclude>org.slf4j:slf4j-jdk14:*:jar:compile</exclude>
-                                    </excludes>
-                                </bannedDependencies>
-                            </rules>
-                            <fail>true</fail>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
