@@ -130,7 +130,25 @@
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
-            <version>3.8.6</version>
+            <version>3.9.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.maven.resolver</groupId>
+                    <artifactId>maven-resolver-spi</artifactId>
+                </exclusion>
+                <!--exclusion>
+                    <groupId>org.codehaus.plexus</groupId>
+                    <artifactId>plexus-utils</artifactId>
+                </exclusion-->
+                <exclusion>
+                    <groupId>org.codehaus.plexus</groupId>
+                    <artifactId>plexus-component-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
@@ -207,6 +225,22 @@
                 <exclusion>
                     <groupId>org.apache.maven.resolver</groupId>
                     <artifactId>maven-resolver-util</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven.resolver</groupId>
+                    <artifactId>maven-resolver-spi</artifactId>
+                </exclusion>
+                <!--exclusion>
+                    <groupId>org.codehaus.plexus</groupId>
+                    <artifactId>plexus-utils</artifactId>
+                </exclusion-->
+                <exclusion>
+                    <groupId>org.apache.maven.resolver</groupId>
+                    <artifactId>maven-resolver-impl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.maven.resolver</groupId>
+                    <artifactId>maven-resolver-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -819,6 +853,17 @@
             <version>2.4.21</version>
             <scope>provided</scope>
         </dependency>
+        <!--dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+            <version>4.0.0</version>
+        </dependency-->
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-component-annotations</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+
         <!--Tests-->
         <dependency>
             <groupId>org.jenkins-ci.main</groupId>
